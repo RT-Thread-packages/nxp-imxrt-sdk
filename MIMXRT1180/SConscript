@@ -1,0 +1,69 @@
+Import('rtconfig')
+from building import *
+
+cwd = GetCurrentDir()
+path = [cwd + '/CMSIS/Core/Include',
+        cwd + '/CMSIS/Core/m-profile',
+        cwd + '/MIMXRT1189', 
+        cwd + '/MIMXRT1189/drivers', 
+        cwd + '/MIMXRT1189/periph']
+src = Split('''
+            MIMXRT1189/drivers/fsl_common.c
+            MIMXRT1189/drivers/fsl_common_arm.c
+            MIMXRT1189/drivers/fsl_dcdc.c
+            MIMXRT1189/drivers/fsl_pmu.c
+            MIMXRT1189/drivers/fsl_clock.c
+            MIMXRT1189/drivers/fsl_ele_base_api.c
+            MIMXRT1189/drivers/fsl_s3mu.c
+            MIMXRT1189/drivers/fsl_trdc.c
+            MIMXRT1189/drivers/fsl_gpc.c
+            MIMXRT1189/drivers/fsl_memory.c           
+            MIMXRT1189/drivers/fsl_soc_src.c
+            MIMXRT1189/drivers/fsl_rgpio.c
+            MIMXRT1189/drivers/fsl_lpuart.c
+            ''')
+
+if GetDepend(['SOC_MIMXRT1189CVM8C_CM33']):
+    path += [cwd + '/MIMXRT1189/drivers/cm33']
+    src += ['MIMXRT1189/system_MIMXRT1189_cm33.c']
+    src += ['MIMXRT1189/drivers/cm33/fsl_cache.c']
+    if rtconfig.PLATFORM in ['gcc']:
+        src += ['MIMXRT1189/gcc/startup_MIMXRT1189_cm33.S']
+    elif rtconfig.PLATFORM in ['armcc', 'armclang']:
+        src += ['MIMXRT1189/arm/startup_MIMXRT1189_cm33.s']
+    elif rtconfig.PLATFORM in ['iccarm']:
+        src += ['MIMXRT1189/iar/startup_MIMXRT1189_cm33.s']
+
+if GetDepend(['SOC_MIMXRT1189CVM8C_CM7']):
+    path += [cwd + '/MIMXRT1189/drivers/cm7']
+    src += ['MIMXRT1189/system_MIMXRT1189_cm7.c']
+    src += ['MIMXRT1189/drivers/cm7/fsl_cache.c']
+    if rtconfig.PLATFORM in ['gcc']:
+        src += ['MIMXRT1189/gcc/startup_MIMXRT1189_cm7.S']
+    elif rtconfig.PLATFORM in ['armcc', 'armclang']:
+        src += ['MIMXRT1189/arm/startup_MIMXRT1189_cm7.s']
+    elif rtconfig.PLATFORM in ['iccarm']:
+        src += ['MIMXRT1189/iar/startup_MIMXRT1189_cm7.s']
+
+# if GetDepend(['BSP_USING_GPIO']):
+#     src += ['MIMXRT1189/drivers/fsl_rgpio.c']
+
+# if GetDepend(['BSP_USING_LPUART']):
+#     src += ['MIMXRT1189/drivers/fsl_lpuart.c']
+
+# if GetDepend(['RT_USING_CAN']):
+#     src += ['MIMXRT1189/drivers/fsl_flexcan.c']
+
+# if GetDepend(['BSP_USING_FLEXSPI']):
+#     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
+
+#fsl os abstract files
+# src += ['MIMXRT1189/drivers/fsl_os_abstraction_rtthread.c']
+# src += ['MIMXRT1189/drivers/generic_list.c']
+
+if rtconfig.PLATFORM in ['gcc']:
+    group = DefineGroup('Libraries', src, depend = [''], CPPPATH = path, ASFLAGS = '$ASFLAGS -D __STARTUP_CLEAR_BSS')
+else:
+    group = DefineGroup('Libraries', src, depend = [''], CPPPATH = path)
+
+Return('group')

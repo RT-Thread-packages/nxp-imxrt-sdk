@@ -21,3 +21,5 @@ imxrt1061-forlinx-OK1061-S
 imxrt1064-nxp-evk
 
 imxrt1170-nxp-evk
+
+imxrt1180-nxp-evk
