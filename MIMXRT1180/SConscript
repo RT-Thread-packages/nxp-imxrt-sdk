@@ -54,8 +54,36 @@ if GetDepend(['SOC_MIMXRT1189CVM8C_CM7']):
 # if GetDepend(['RT_USING_CAN']):
 #     src += ['MIMXRT1189/drivers/fsl_flexcan.c']
 
-# if GetDepend(['BSP_USING_FLEXSPI']):
-#     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
+if GetDepend(['BSP_USING_FLEXSPI']):
+    src += ['MIMXRT1189/drivers/fsl_flexspi.c']
+
+if GetDepend(['BSP_USING_ETHERCAT']):
+    src += [
+        'MIMXRT1189/drivers/fsl_mu.c',
+    ]
+
+if GetDepend(['BSP_USING_ETH']):
+    src += [
+        'MIMXRT1189/drivers/fsl_msgintr.c',
+        'MIMXRT1189/drivers/fsl_netc_ierb.c',
+        'MIMXRT1189/drivers/fsl_netc_timer.c',
+        'MIMXRT1189/drivers/fsl_netc_mdio.c',
+        'MIMXRT1189/drivers/fsl_netc_endpoint.c',
+        'MIMXRT1189/drivers/fsl_netc_soc.c',
+        'MIMXRT1189/drivers/netc_hw/fsl_netc_hw.c',
+        'MIMXRT1189/drivers/netc_hw/fsl_netc_hw_port.c',
+        'MIMXRT1189/drivers/netc_hw/fsl_netc_hw_si.c',
+        'MIMXRT1189/drivers/netc_hw/fsl_netc_hw_enetc.c',
+    ]
+    if str(GetDepend('NETC_USE_SWT')) == '1':
+        src += ['MIMXRT1189/drivers/fsl_netc_switch.c']
+
+if GetDepend(['BSP_USING_ETHERCAT']):
+    src += [
+        'MIMXRT1189/drivers/fsl_gpt.c',
+        'MIMXRT1189/drivers/fsl_ecat.c',
+        'MIMXRT1189/drivers/fsl_xbar.c',
+    ]
 
 #fsl os abstract files
 # src += ['MIMXRT1189/drivers/fsl_os_abstraction_rtthread.c']
