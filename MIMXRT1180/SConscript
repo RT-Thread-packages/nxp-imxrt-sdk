@@ -58,9 +58,7 @@ if GetDepend(['BSP_USING_FLEXSPI']):
     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
 
 if GetDepend(['BSP_USE_MULTICORE']):
-    src += [
-        'MIMXRT1189/drivers/fsl_mu.c',
-    ]
+    src += ['MIMXRT1189/drivers/fsl_mu.c']
 
 if GetDepend(['BSP_USING_ETH']):
     src += [
