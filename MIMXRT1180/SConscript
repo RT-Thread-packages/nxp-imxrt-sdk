@@ -27,6 +27,7 @@ if GetDepend(['BSP_USING_DMA']):
     src += ['MIMXRT1189/drivers/fsl_edma.c']
     src += ['MIMXRT1189/drivers/fsl_edma_soc.c']
     src += ['MIMXRT1189/drivers/fsl_lpuart_edma.c']
+    src += ['MIMXRT1189/drivers/fsl_flexspi_edma.c']
 
 if GetDepend(['SOC_MIMXRT1189CVM8C_CM33']):
     path += [cwd + '/MIMXRT1189/drivers/cm33']
@@ -64,6 +65,9 @@ if GetDepend(['BSP_USING_CLOCK_TIMER']):
 
 if GetDepend(['BSP_USING_FLEXSPI']):
     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
+
+if GetDepend(['BSP_USING_LPADC']):
+    src += ['MIMXRT1189/drivers/fsl_lpadc.c']
 
 if GetDepend(['BSP_USE_MULTICORE']):
     src += ['MIMXRT1189/drivers/fsl_mu.c']
