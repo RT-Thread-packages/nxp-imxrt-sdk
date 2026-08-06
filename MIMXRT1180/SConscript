@@ -19,14 +19,11 @@ src = Split('''
             MIMXRT1189/drivers/fsl_gpc.c
             MIMXRT1189/drivers/fsl_memory.c           
             MIMXRT1189/drivers/fsl_soc_src.c
-            MIMXRT1189/drivers/fsl_rgpio.c
-            MIMXRT1189/drivers/fsl_lpuart.c
             ''')
 
 if GetDepend(['BSP_USING_DMA']):
     src += ['MIMXRT1189/drivers/fsl_edma.c']
     src += ['MIMXRT1189/drivers/fsl_edma_soc.c']
-    src += ['MIMXRT1189/drivers/fsl_lpuart_edma.c']
 
 if GetDepend(['SOC_MIMXRT1189CVM8C_CM33']):
     path += [cwd + '/MIMXRT1189/drivers/cm33']
@@ -56,18 +53,21 @@ if GetDepend(['BSP_USING_CLOCK_TIMER']):
 if GetDepend(['BSP_USING_I2C']):
     src += ['MIMXRT1189/drivers/fsl_lpi2c.c']
 
-# if GetDepend(['BSP_USING_GPIO']):
-#     src += ['MIMXRT1189/drivers/fsl_rgpio.c']
+if GetDepend(['BSP_USING_GPIO']):
+    src += ['MIMXRT1189/drivers/fsl_rgpio.c']
 
-# if GetDepend(['BSP_USING_LPUART']):
-#     src += ['MIMXRT1189/drivers/fsl_lpuart.c']
+if GetDepend(['BSP_USING_LPUART']):
+    src += ['MIMXRT1189/drivers/fsl_lpuart.c']
+    if GetDepend(['BSP_USING_DMA']):
+        src += ['MIMXRT1189/drivers/fsl_lpuart_edma.c']
 
-# if GetDepend(['RT_USING_CAN']):
-#     src += ['MIMXRT1189/drivers/fsl_flexcan.c']
+if GetDepend(['RT_USING_CAN']):
+    src += ['MIMXRT1189/drivers/fsl_flexcan.c']
 
 if GetDepend(['BSP_USING_FLEXSPI']):
     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
-    src += ['MIMXRT1189/drivers/fsl_flexspi_edma.c']
+    if GetDepend(['BSP_USING_DMA']):
+        src += ['MIMXRT1189/drivers/fsl_flexspi_edma.c']    
 
 if GetDepend(['BSP_USING_LPADC']):
     src += ['MIMXRT1189/drivers/fsl_lpadc.c']
