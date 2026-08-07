@@ -74,6 +74,31 @@ if GetDepend(['BSP_USING_LPADC']):
 
 if GetDepend(['BSP_USE_MULTICORE']):
     src += ['MIMXRT1189/drivers/fsl_mu.c']
+    src += [
+        'multicore/mcmgr/src/mcmgr.c',
+        'multicore/mcmgr/src/mcmgr_internal_core_api_imxrt1180.c',
+        'multicore/mcmgr/src/mcmgr_mu_internal.c',
+    ]
+    path += [
+        cwd + '/multicore/mcmgr/inc',
+        cwd + '/multicore/mcmgr/inc/platform/imxrt1180',
+    ]
+
+if GetDepend(['BSP_USE_MULTICORE_RPMSG_LITE']):
+    src += [
+        'multicore/rpmsg-lite/lib/common/llist.c',
+        'multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_lite.c',
+        'multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_queue.c',
+        'multicore/rpmsg-lite/lib/rpmsg_lite/rpmsg_ns.c',
+        'multicore/rpmsg-lite/lib/virtio/virtqueue.c',
+        'multicore/rpmsg-lite/lib/rpmsg_lite/porting/environment/rpmsg_env_rtthread.c',
+        'multicore/rpmsg-lite/lib/rpmsg_lite/porting/platform/imxrt1180/rpmsg_platform.c',
+    ]
+    path += [
+        cwd + '/multicore/rpmsg-lite/lib/include',
+        cwd + '/multicore/rpmsg-lite/lib/include/environment/rtthread',
+        cwd + '/multicore/rpmsg-lite/lib/include/platform/imxrt1180',
+    ]
 
 if GetDepend(['BSP_USING_ETH']):
     src += [
@@ -96,6 +121,13 @@ if GetDepend(['BSP_USING_ETHERCAT']):
         'MIMXRT1189/drivers/fsl_gpt.c',
         'MIMXRT1189/drivers/fsl_ecat.c',
         'MIMXRT1189/drivers/fsl_xbar.c',
+        'ethercat/ethercat_init.c',
+        'ethercat/digital_io.c',
+    ]
+    src += Glob(cwd + '/ethercat/SSC/Src/*.c')
+    path += [
+        cwd + '/ethercat',
+        cwd + '/ethercat/SSC/Src',
     ]
 
 #fsl os abstract files
