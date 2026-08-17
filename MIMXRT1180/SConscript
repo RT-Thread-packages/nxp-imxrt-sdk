@@ -47,12 +47,6 @@ if GetDepend(['SOC_MIMXRT1189CVM8C_CM7']):
     elif rtconfig.PLATFORM in ['iccarm']:
         src += ['MIMXRT1189/iar/startup_MIMXRT1189_cm7.s']
 
-if GetDepend(['BSP_USING_CLOCK_TIMER']):
-    src += ['MIMXRT1189/drivers/fsl_gpt.c']
-
-if GetDepend(['BSP_USING_I2C']):
-    src += ['MIMXRT1189/drivers/fsl_lpi2c.c']
-
 if GetDepend(['BSP_USING_GPIO']):
     src += ['MIMXRT1189/drivers/fsl_rgpio.c']
 
@@ -61,6 +55,19 @@ if GetDepend(['BSP_USING_LPUART']):
     if GetDepend(['BSP_USING_DMA']):
         src += ['MIMXRT1189/drivers/fsl_lpuart_edma.c']
 
+if GetDepend(['BSP_USING_CLOCK_TIMER']):
+    src += ['MIMXRT1189/drivers/fsl_gpt.c']
+
+if GetDepend(['BSP_USING_I2C']):
+    src += ['MIMXRT1189/drivers/fsl_lpi2c.c']
+    if GetDepend(['BSP_USING_DMA']):
+        src += ['MIMXRT1189/drivers/fsl_lpi2c_edma.c']    
+
+if GetDepend(['BSP_USING_SPI']):
+    src += ['MIMXRT1189/drivers/fsl_lpspi.c']
+    if GetDepend(['BSP_USING_DMA']):
+        src += ['MIMXRT1189/drivers/fsl_lpspi_edma.c']
+
 if GetDepend(['RT_USING_CAN']):
     src += ['MIMXRT1189/drivers/fsl_flexcan.c']
 
@@ -68,6 +75,9 @@ if GetDepend(['BSP_USING_FLEXSPI']):
     src += ['MIMXRT1189/drivers/fsl_flexspi.c']
     if GetDepend(['BSP_USING_DMA']):
         src += ['MIMXRT1189/drivers/fsl_flexspi_edma.c']    
+
+if GetDepend(['BSP_USING_SDIO']):
+    src += ['MIMXRT1189/drivers/fsl_usdhc.c']
 
 if GetDepend(['BSP_USING_LPADC']):
     src += ['MIMXRT1189/drivers/fsl_lpadc.c']
