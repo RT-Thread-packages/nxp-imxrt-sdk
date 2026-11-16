@@ -134,7 +134,7 @@ if GetDepend(['BSP_USING_ETHERCAT']):
         'ethercat/ethercat_init.c',
         'ethercat/digital_io.c',
     ]
-    src += Glob(cwd + '/ethercat/SSC/Src/*.c')
+    src += Glob('ethercat/SSC/Src/*.c')
     path += [
         cwd + '/ethercat',
         cwd + '/ethercat/SSC/Src',
